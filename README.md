@@ -12,7 +12,7 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 ## Explanation of the script 'run_analysis.R'
 
 'run_analysis.R' does the following:
-1. Sets the working directory.
-2. Loads 'plyr' package if it is not already instaled.
-3. Downloads the data for the project if the data file is not already in working directory.
-4. 
+*1. Sets the working directory.
+*2. Loads 'plyr' package if it is not already instaled.
+*3. Downloads the data for the project if the data file is not already in working directory.
+*4. 
