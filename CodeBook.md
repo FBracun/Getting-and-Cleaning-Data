@@ -165,14 +165,14 @@ test data sets. Feature names with the format "mean(tABC...)" are the average va
 
 
 "Activity" levels:
- 1 WALKING
- 2 WALKING_UPSTAIRS
- 3 WALKING_DOWNSTAIRS
- 4 SITTING
- 5 STANDING
- 6 LAYING
+* 1 WALKING
+* 2 WALKING_UPSTAIRS
+* 3 WALKING_DOWNSTAIRS
+* 4 SITTING
+* 5 STANDING
+* 6 LAYING
 
 
 Prefixes in "mean(tABC...)" and "mean(fABC...)":
- t - prefix 't' to denote time domain signals
- f - prefix 'f' to denote frequency domain signals
+* t - prefix 't' to denote time domain signals
+* f - prefix 'f' to denote frequency domain signals
