@@ -48,8 +48,8 @@ Stage 4. Appropriately labels the data set with descriptive activity names
 * in line 84 activity factor in dataset is renamed with descriptive activity names
 
 Stage 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+* in this stage columns are averaged grouping by activity and subject. Note that 'id' is subject's identifier.
 * in line 89 code creates a tidy data set from datase by using ddply() function. For each subset of a data frame 'dataset', function ddply() applies function 'f=function(x){ colMeans(x[,-c(1:2)]) })' and then combine results into a data frame 'tidy_dataset. The '.(id, activity)' defines variables to split 'dataset' data frame by, i.e. the variables used by ddply() function to summarize a dataset. Note the use of the '.' function to allow id and activity to be used without quoting.
 
-
-
+In lines from 101 to 103 a tidy data set and it's column names are writen to files.
 
