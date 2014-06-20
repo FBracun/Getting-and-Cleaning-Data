@@ -1,4 +1,4 @@
-Description of data in tidy_dataset.csv
+Description of Data Tidy Dataset
 =========================
 A tidy_dataset.csv contains 180 observations of 81 variables. For each record it is provided:
 * A 79-feature vector with time and frequency domain variables. Features are the average values of the raw features grouped by "Activity" and "Subject".
