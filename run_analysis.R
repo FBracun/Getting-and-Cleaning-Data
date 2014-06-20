@@ -1,4 +1,4 @@
-## Getting and Cleaning Data - Course Project
+## Getting and Cleaning Data - Course Project 
 ##
 
 
@@ -88,12 +88,19 @@ dataset$activity <- factor(dataset$activity, labels=activity_labels$V2)
 
 tidy_dataset <- ddply(dataset, .(id, activity), .f=function(x){ 
                                                       colMeans(x[,-c(1:2)]) 
-                                                      }) #id identifies each subject
+                                                      }) #id identifies eaach subject
 
-## End resulty of a project
 
-write.csv(tidy_dataset, "tidy_dataset.csv") # Save tidy data set with '.csv' for Github repo
-write.csv(tidy_dataset, "tidy_dataset.txt") # Save tidy data set with '.txt' for uploading on Coursera
+## Renames columns with a descriptive name: 'mean("measurament")'
+newColNames = sapply(names(tidy_dataset)[-(1:2)], function(name) paste("mean(", name, ")", sep=""))
+names(tidy_dataset) <- c("Activity", "Subject", newColNames)
+
+
+## Saves end resulty of a project
+
+write.csv(tidy_dataset, "tidy_dataset.csv", row.names = FALSE) # Save tidy data set with '.csv' for Github repo
+write.csv(tidy_dataset, "tidy_dataset.txt", row.names = FALSE) # Save tidy data set with '.txt' for uploading on Coursera
+write.csv(names(tidy_dataset), "codeBook_col.txt") #Save the col names to include them in CodeBook.md
 
 
 
