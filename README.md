@@ -19,7 +19,23 @@ The script run_analysis.R can be run in R or RStudio to generate the tidy data s
 ## Explanation of the script 'run_analysis.R'
 
 'run_analysis.R' does the following:
-* 1. Sets the working directory.
-* 2. Loads 'plyr' package if it is not already instaled.
-* 3. Downloads the data for the project if the data file is not already in working directory.
-* 4. 
+First, make a few tasks to prepare the working environment: 
+* Sets the working directory.
+* Loads 'plyr' package if it is not already instaled.
+* Downloads the data for the project if the data file is not already in the working directory.
+
+Then the code defines two functions that are called by later commands:
+* ReadData(filename, colNames) function which reads data from 'filename' in zipped file 'data.zip' and if colNames is specified sets column names  
+* getmergedData(type, features) function obtains data - by calling function ReadData() - and merges two data sets to create one data set
+
+The main code starts in line 58. In line 58 the code first reads features used for column names for training and test data and then in lines 61, and 62 it reads training and test data sets.
+
+At this point the code has prepared all that we need to prepare tidy data, the goal of this project.
+
+
+
+
+
+
+
+
