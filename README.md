@@ -33,11 +33,13 @@ The main code starts in line 58. In line 58 the code first reads features used f
 At this point the code has prepared all that we need to prepare tidy data, the goal of this project. This is carried out in five stages. 
 
 Stage 1. Merges the training and the test sets to create one data set
-* training and test data sets are merged (obtained in lines 61 and 62)
-* merged dataset is reordered by id
+* training and test data sets obtained in lines 61 and 62 are merged by code in line 68
+* merged dataset is the reordered by id
 
 Stage 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-*
+* in line 74 data columns are filtered using two calls to grep function with "std" and "mean" parameters, respectively, and column names vector obtained by function colnames(data)
+
+Stage 3. 
 
 
 
