@@ -39,11 +39,16 @@ Stage 1. Merges the training and the test sets to create one data set
 Stage 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 * in line 74 data columns are filtered and stored in dataframe 'dataset' 
 * firs by using two calls of grep function with "std" and "mean" parameters, we have obtained two vectors indicating columns with the measurements on the standard and  meand deviation for each measurement, respectively
-* then we use c() function to construct filtering vector 'c(1,2,grep("std", colnames(data)), grep("mean", colnames(data)))' to subset columns from data 
-  Note that columns 1 (i.e., 'id') and 2 (i.e., 'activity') are also included in dataset
+* then we use c() function to construct filtering vector 'c(1,2,grep("std", colnames(data)), grep("mean", colnames(data)))' to subset columns from data. Note that columns 1 (i.e., 'id') and 2 (i.e., 'activity') are also included in dataset.
 
-Stage 3. 
+Stage 3. Uses descriptive activity names to name the activities in the data set
+* in line 79 activity labels are obtained from "activity_labels.txt" file using ReadData() function defined at the begging of script. 
 
+Stage 4. Appropriately labels the data set with descriptive activity names
+* in line 84 activity factor in dataset is renamed with descriptive activity names
+
+Stage 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+* in line 89 code creates a tidy data set from datase by using ddply() function. For each subset of a data frame 'dataset', function ddply() applies function 'f=function(x){ colMeans(x[,-c(1:2)]) })' and then combine results into a data frame 'tidy_dataset. The '.(id, activity)' defines variables to split 'dataset' data frame by, i.e. the variables used by ddply() function to summarize a dataset. Note the use of the '.' function to allow id and activity to be used without quoting.
 
 
 
