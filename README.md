@@ -37,7 +37,10 @@ Stage 1. Merges the training and the test sets to create one data set
 * merged dataset is the reordered by id
 
 Stage 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-* in line 74 data columns are filtered using two calls to grep function with "std" and "mean" parameters, respectively, and column names vector obtained by function colnames(data)
+* in line 74 data columns are filtered and stored in dataframe 'dataset' 
+* firs by using two calls of grep function with "std" and "mean" parameters, we have obtained two vectors indicating columns with the measurements on the standard and  meand deviation for each measurement, respectively
+* then we use we hand column names vector obtained by function colnames(data)
+  Note that columns 1 (i.e., 'id') and 2 (i.e., 'activity') are also included in dataset
 
 Stage 3. 
 
