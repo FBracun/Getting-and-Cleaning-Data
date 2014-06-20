@@ -28,7 +28,7 @@ Then the code defines two functions that are called by later commands:
 * ReadData(filename, colNames) function which reads data from 'filename' in zipped file 'data.zip' and if colNames is specified sets column names  
 * getmergedData(type, features) function obtains data - by calling function ReadData() - and merges two data sets to create one data set
 
-The main code starts in line 58. In line 58 the code first reads features used for column names for training and test data and then in lines 61, and 62 it reads training and test data sets.
+The main code starts in line 58. In line 58 the code first reads features used for column names for training and test data and then in lines 61 and 62 it reads training and test data sets.
 
 At this point the code has prepared all that we need to prepare tidy data, the goal of this project. This is carried out in five stages. 
 
@@ -38,7 +38,7 @@ Stage 1. Merges the training and the test sets to create one data set
 
 Stage 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 * in line 74 data columns are filtered and stored in dataframe 'dataset' 
-* firs by using two calls of grep function with "std" and "mean" parameters, we have obtained two vectors indicating columns with the measurements on the standard and  meand deviation for each measurement, respectively
+* firs by using two calls of grep function with "std" and "mean" parameters, we have obtained two vectors indicating columns with the measurements on the standard and  mean deviation for each measurement, respectively
 * then we use c() function to construct filtering vector 'c(1,2,grep("std", colnames(data)), grep("mean", colnames(data)))' to subset columns from data. Note that columns 1 (i.e., 'id') and 2 (i.e., 'activity') are also included in dataset.
 
 Stage 3. Uses descriptive activity names to name the activities in the data set
@@ -51,5 +51,5 @@ Stage 5. Creates a second, independent tidy data set with the average of each va
 * in this stage columns are averaged grouping by activity and subject. Note that 'id' is subject's identifier.
 * in line 89 code creates a tidy data set from datase by using ddply() function. For each subset of a data frame 'dataset', function ddply() applies function 'f=function(x){ colMeans(x[,-c(1:2)]) })' and then combine results into a data frame 'tidy_dataset. The '.(id, activity)' defines variables to split 'dataset' data frame by, i.e. the variables used by ddply() function to summarize a dataset. Note the use of the '.' function to allow id and activity to be used without quoting.
 
-In lines from 101 to 103 a tidy data set and it's column names are writen to files.
+In lines from 101 to 103 a tidy data set and it's column names are written to files.
 
