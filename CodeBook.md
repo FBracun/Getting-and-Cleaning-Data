@@ -1,55 +1,182 @@
-Description of Project
+Description of data in tidy_dataset.csv
 =========================
-The purpose of this project is to demonstrate ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis. 
+A tidy_dataset.csv contains 180 observations of 81 variables. For each record it is provided:
+* A 79-feature vector with time and frequency domain variables. Features are the average values of the raw features grouped by "Activity" and "Subject".
+* Its activity label. 
+* An identifier of the subject who carried out the experiment.
 
-###Background information
-One of the most exciting areas in all of data science right now is wearable computing - see for example this article (http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/). Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones .
+#Raw data
+A full description of raw data can be found here:
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
-###What does the run_analysis.R script do?
-R script called run_analysis.R that does the following.  Merges the training and the test sets to create one data set. Extracts only the measurements on the mean and standard deviation for each measurement.  Uses descriptive activity names to name the activities in the data set Appropriately labels the data set with descriptive activity names.  Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+*tBodyAcc-XYZ
+*tGravityAcc-XYZ
+*tBodyAccJerk-XYZ
+*tBodyGyro-XYZ
+*tBodyGyroJerk-XYZ
+*tBodyAccMag
+*tGravityAccMag
+*tBodyAccJerkMag
+*tBodyGyroMag
+*tBodyGyroJerkMag
+*fBodyAcc-XYZ
+*fBodyAccJerk-XYZ
+*fBodyGyro-XYZ
+*fBodyAccMag
+*fBodyAccJerkMag
+*fBodyGyroMag
+*fBodyGyroJerkMag
+
+The set of variables that were estimated from these signals are: 
+
+*mean(): Mean value
+*std(): Standard deviation
+*mad(): Median absolute deviation 
+*max(): Largest value in array
+*min(): Smallest value in array
+*sma(): Signal magnitude area
+*energy(): Energy measure. Sum of the squares divided by the number of values. 
+*iqr(): Interquartile range 
+*entropy(): Signal entropy
+*arCoeff(): Autorregresion coefficients with Burg order equal to 4
+*correlation(): correlation coefficient between two signals
+*maxInds(): index of the frequency component with largest magnitude
+*meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+*skewness(): skewness of the frequency domain signal 
+*kurtosis(): kurtosis of the frequency domain signal 
+*bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+*angle(): Angle between to vectors.
 
 
-## How to run project
-Assuming the following data is in the working directory: 
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
-
-The script run_analysis.R can be run in R or RStudio to generate the tidy data set 'tidy_dataset.csv' described in the CodeBook.md
-
-
-## Explanation of the script 'run_analysis.R'
-
-'run_analysis.R' does the following:
-First, make a few tasks to prepare the working environment: 
-* Sets the working directory.
-* Loads 'plyr' package if it is not already instaled.
-* Downloads the data for the project if the data file is not already in the working directory.
-
-Then the code defines two functions that are called by later commands:
-* ReadData(filename, colNames) function which reads data from 'filename' in zipped file 'data.zip' and if colNames is specified sets column names  
-* getmergedData(type, features) function obtains data - by calling function ReadData() - and merges two data sets to create one data set
-
-The main code starts in line 58. In line 58 the code first reads features used for column names for training and test data and then in lines 61 and 62 it reads training and test data sets.
-
-At this point the code has prepared all that we need to prepare tidy data, the goal of this project. This is carried out in five stages. 
+#Transformations on raw data
+Transformations on raw data are performed in five stages: 
 
 Stage 1. Merges the training and the test sets to create one data set
-* training and test data sets obtained in lines 61 and 62 are merged by code in line 68
-* merged dataset is the reordered by id
+* training and test data sets are merged 
+* merged dataset is then reordered by id
 
 Stage 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-* in line 74 data columns are filtered and stored in dataframe 'dataset' 
-* firs by using two calls of grep function with "std" and "mean" parameters, we have obtained two vectors indicating columns with the measurements on the standard and  mean deviation for each measurement, respectively
-* then we use c() function to construct filtering vector 'c(1,2,grep("std", colnames(data)), grep("mean", colnames(data)))' to subset columns from data. Note that columns 1 (i.e., 'id') and 2 (i.e., 'activity') are also included in dataset.
+* merged dataset columns are then filtered, i.e. only  the measurements on the mean and standard deviation for each measurement are extracted
+
 
 Stage 3. Uses descriptive activity names to name the activities in the data set
-* in line 79 activity labels are obtained from "activity_labels.txt" file using ReadData() function defined at the begging of script. 
+* activity labels are obtained from "activity_labels.txt" file 
 
 Stage 4. Appropriately labels the data set with descriptive activity names
-* in line 84 activity factor in dataset is renamed with descriptive activity names
+* activity factor in dataset is renamed with descriptive activity names
 
 Stage 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-* in this stage columns are averaged grouping by activity and subject. Note that 'id' is subject's identifier.
-* in line 89 code creates a tidy data set from datase by using ddply() function. For each subset of a data frame 'dataset', function ddply() applies function 'f=function(x){ colMeans(x[,-c(1:2)]) })' and then combine results into a data frame 'tidy_dataset. The '.(id, activity)' defines variables to split 'dataset' data frame by, i.e. the variables used by ddply() function to summarize a dataset. Note the use of the '.' function to allow id and activity to be used without quoting.
+* columns are averaged grouping by activity and subject.
 
-In lines from 101 to 103 a tidy data set and it's column names are written to files.
+# Tidy Data Set Features
+In our data set only the mean value and standard deviation from signals described above are extracted. Raw data transformation produces a tidy data set that includes both the training and 
+test data sets. Feature names with the format "mean(tABC...)" are the average values of the features "tABC..." grouped by "Activity" and "Subject". That means that the features in tidy-dataset.csv are average values of mean value and standard deviation of signals grouped by activity and subject. The tidy data set contains the following features:
 
+ [1] "Activity" ##  Activity label. See description of activity levels belove.                         
+ [2] "Subject"  ##  An identifier of the subject who carried out the experiment.                             
+ [3] "mean(tBodyAcc.std...X)"               
+ [4] "mean(tBodyAcc.std...Y)"               
+ [5] "mean(tBodyAcc.std...Z)"               
+ [6] "mean(tGravityAcc.std...X)"            
+ [7] "mean(tGravityAcc.std...Y)"            
+ [8] "mean(tGravityAcc.std...Z)"            
+ [9] "mean(tBodyAccJerk.std...X)"           
+[10] "mean(tBodyAccJerk.std...Y)"           
+[11] "mean(tBodyAccJerk.std...Z)"           
+[12] "mean(tBodyGyro.std...X)"              
+[13] "mean(tBodyGyro.std...Y)"              
+[14] "mean(tBodyGyro.std...Z)"              
+[15] "mean(tBodyGyroJerk.std...X)"          
+[16] "mean(tBodyGyroJerk.std...Y)"          
+[17] "mean(tBodyGyroJerk.std...Z)"          
+[18] "mean(tBodyAccMag.std..)"              
+[19] "mean(tGravityAccMag.std..)"           
+[20] "mean(tBodyAccJerkMag.std..)"          
+[21] "mean(tBodyGyroMag.std..)"             
+[22] "mean(tBodyGyroJerkMag.std..)"         
+[23] "mean(fBodyAcc.std...X)"               
+[24] "mean(fBodyAcc.std...Y)"               
+[25] "mean(fBodyAcc.std...Z)"               
+[26] "mean(fBodyAccJerk.std...X)"           
+[27] "mean(fBodyAccJerk.std...Y)"           
+[28] "mean(fBodyAccJerk.std...Z)"           
+[29] "mean(fBodyGyro.std...X)"              
+[30] "mean(fBodyGyro.std...Y)"              
+[31] "mean(fBodyGyro.std...Z)"              
+[32] "mean(fBodyAccMag.std..)"              
+[33] "mean(fBodyBodyAccJerkMag.std..)"      
+[34] "mean(fBodyBodyGyroMag.std..)"         
+[35] "mean(fBodyBodyGyroJerkMag.std..)"     
+[36] "mean(tBodyAcc.mean...X)"              
+[37] "mean(tBodyAcc.mean...Y)"              
+[38] "mean(tBodyAcc.mean...Z)"              
+[39] "mean(tGravityAcc.mean...X)"           
+[40] "mean(tGravityAcc.mean...Y)"           
+[41] "mean(tGravityAcc.mean...Z)"           
+[42] "mean(tBodyAccJerk.mean...X)"          
+[43] "mean(tBodyAccJerk.mean...Y)"          
+[44] "mean(tBodyAccJerk.mean...Z)"          
+[45] "mean(tBodyGyro.mean...X)"             
+[46] "mean(tBodyGyro.mean...Y)"             
+[47] "mean(tBodyGyro.mean...Z)"             
+[48] "mean(tBodyGyroJerk.mean...X)"         
+[49] "mean(tBodyGyroJerk.mean...Y)"         
+[50] "mean(tBodyGyroJerk.mean...Z)"         
+[51] "mean(tBodyAccMag.mean..)"             
+[52] "mean(tGravityAccMag.mean..)"          
+[53] "mean(tBodyAccJerkMag.mean..)"         
+[54] "mean(tBodyGyroMag.mean..)"            
+[55] "mean(tBodyGyroJerkMag.mean..)"        
+[56] "mean(fBodyAcc.mean...X)"              
+[57] "mean(fBodyAcc.mean...Y)"              
+[58] "mean(fBodyAcc.mean...Z)"              
+[59] "mean(fBodyAcc.meanFreq...X)"          
+[60] "mean(fBodyAcc.meanFreq...Y)"          
+[61] "mean(fBodyAcc.meanFreq...Z)"          
+[62] "mean(fBodyAccJerk.mean...X)"          
+[63] "mean(fBodyAccJerk.mean...Y)"          
+[64] "mean(fBodyAccJerk.mean...Z)"          
+[65] "mean(fBodyAccJerk.meanFreq...X)"      
+[66] "mean(fBodyAccJerk.meanFreq...Y)"      
+[67] "mean(fBodyAccJerk.meanFreq...Z)"      
+[68] "mean(fBodyGyro.mean...X)"             
+[69] "mean(fBodyGyro.mean...Y)"             
+[70] "mean(fBodyGyro.mean...Z)"             
+[71] "mean(fBodyGyro.meanFreq...X)"         
+[72] "mean(fBodyGyro.meanFreq...Y)"         
+[73] "mean(fBodyGyro.meanFreq...Z)"         
+[74] "mean(fBodyAccMag.mean..)"             
+[75] "mean(fBodyAccMag.meanFreq..)"         
+[76] "mean(fBodyBodyAccJerkMag.mean..)"     
+[77] "mean(fBodyBodyAccJerkMag.meanFreq..)" 
+[78] "mean(fBodyBodyGyroMag.mean..)"        
+[79] "mean(fBodyBodyGyroMag.meanFreq..)"    
+[80] "mean(fBodyBodyGyroJerkMag.mean..)"    
+[81] "mean(fBodyBodyGyroJerkMag.meanFreq..)"
+
+
+"Activity" levels:
+ 1 WALKING
+
+ 2 WALKING_UPSTAIRS
+
+ 3 WALKING_DOWNSTAIRS
+
+ 4 SITTING
+5 STANDING
+
+ 6 LAYING
+
+
+Prefixes in "mean(tABC...)" and "mean(fABC...)":
+ t - prefix 't' to denote time domain signals
+ f - prefix 'f' to denote frequency domain signals

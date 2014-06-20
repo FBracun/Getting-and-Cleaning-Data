@@ -86,7 +86,7 @@ dataset$activity <- factor(dataset$activity, labels=activity_labels$V2)
 
 ## 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-tidy_dataset <- ddply(dataset, .(id, activity), .f=function(x){ 
+tidy_dataset <- ddply(dataset, .(activity, id), .f=function(x){ 
                                                       colMeans(x[,-c(1:2)]) 
                                                       }) #id identifies eaach subject
 
