@@ -1,11 +1,11 @@
-Description of Data Tidy Dataset
+Description of Tidy Dataset
 =========================
-A tidy_dataset.csv contains 180 observations of 81 variables. For each record it is provided:
-* A 79-feature vector with time and frequency domain variables. Features are the average values of the raw features grouped by "Activity" and "Subject".
+A "tidy_dataset.csv" contains 180 observations of 81 variables. For each record it is provided:
+* A 79-feature vector with time or frequency domain variables. Features are the average values of the raw features grouped by "Activity" and "Subject".
 * Its activity label. 
 * An identifier of the subject who carried out the experiment.
 
-#Raw data
+#Raw Data
 A full description of raw data can be found here:
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
